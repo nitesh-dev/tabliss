@@ -62,9 +62,9 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
     return bookmarks.slice(1, bookmarks.length);
   } else if (message.type === "GET_BOOKMARK_ITEMS") {
     let tree = await browser.bookmarks.getSubTree(message.id);
-    console.log({ tree });
+    // console.log({ tree });
 
-    await browser.bookmarks.move("5", {});
+    // await browser.bookmarks.move("5", {});
 
     if (tree.length) return await getBookmarkItems(tree[0].children!!);
     return [];

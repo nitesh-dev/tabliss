@@ -41,7 +41,6 @@ const Bookmarks: FC<Props> = ({ data = defaultData }) => {
     let id = data.selectedListId ? data.selectedListId : "0";
 
     let d = await getBookmarkItems(id);
-    console.log({ d });
     setBookmarkItems(d);
     setOriginalOrder(d);
   }
@@ -71,9 +70,6 @@ const Bookmarks: FC<Props> = ({ data = defaultData }) => {
     return items;
   }, [bookmarkItems]);
 
-  useEffect(() => {
-    console.log({ bookmarkItems });
-  }, [bookmarkItems]);
 
   const pagination = {
     clickable: true,
@@ -96,7 +92,6 @@ const Bookmarks: FC<Props> = ({ data = defaultData }) => {
 
     if (changes.length > 0) {
       let response = await moveChangedBookmarks(changes);
-      console.log({ response });
     }
   }
 
