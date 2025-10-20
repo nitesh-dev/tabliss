@@ -102,6 +102,8 @@ if (!isWeb) {
       browser: "webextension-polyfill",
     }),
   );
+
+  config.entry.background = "./src/background.ts";
 }
 
 if (isWeb && isProduction) {
