@@ -21,8 +21,9 @@ export function getFaviconIcon(rawUrl: string) {
 
   // // TODO: fix this
   // return url ? `https://www.google.com/s2/favicons?domain=${url}&sz=64` : "";
-  const url = getHost(rawUrl);
-  return url ? `https://ico.faviconkit.net/favicon/${url}` : "";
+  const url = getBaseUrl(rawUrl);
+  
+  return url ? `https://www.google.com/s2/favicons?sz=128&domain_url=${url}` : "";
 }
 
 export function delay(ms: number): Promise<void> {
