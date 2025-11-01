@@ -1,15 +1,22 @@
 import { API } from "../../types";
 
 export type Data = {
-  startTime: string;
-  endTime: string;
   days: number[];
+  dailyReset: boolean;
+  showFormat: 'hours' | 'minutes';
+};
+
+export type WorkSession = {
+  date: string; // YYYY-MM-DD format
+  totalMinutes: number;
+  lastActiveTime: number;
+  isActive: boolean;
 };
 
 export type Props = API<Data>;
 
 export const defaultData: Data = {
-  startTime: "09:00",
-  endTime: "17:00",
   days: [1, 2, 3, 4, 5],
+  dailyReset: true,
+  showFormat: 'hours',
 };
