@@ -1,60 +1,48 @@
-import React, { useEffect, useRef, useState } from "react";
+import { subDays } from "date-fns";
+import React from "react";
+import { useTime } from "../../../hooks";
 import { defaultData, Props } from "./types";
-import { getTodayWorkSeconds } from "./handler";
-
-const UPDATE_INTERVAL = 1000;
 
 const WorkHours: React.FC<Props> = ({ data = defaultData }) => {
-  const [seconds, setSeconds] = useState<number>(0);
-  const intervalRef = useRef<number | null>(null);
+  let start = buildDateTime(data.startTime);
+  const end = buildDateTime(data.endTime);
+  const time = useTime();
 
-  const isWorkDay = (days: number[]): boolean =>
-    days.includes(new Date().getDay());
-
-  useEffect(() => {
-    const poll = async () => {
-      try {
-        const res = await getTodayWorkSeconds();
-        if (res && typeof res.seconds === "number") {
-          setSeconds(res.seconds);
-        }
-      } catch {
-        // ignore background not ready
-      }
-    };
-
-    poll();
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(poll, UPDATE_INTERVAL) as unknown as number;
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    };
-  }, []);
-
-  const formatWorkTime = (totalSeconds: number): string => {
-    const totalMinutes = Math.floor(totalSeconds / 60);
-    if (data.showFormat === "minutes") {
-      return `${totalMinutes}m`;
-    }
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    if (hours === 0) return `${minutes}m`;
-    return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
-  };
+  if (start > end) {
+    start = subDays(start, 1);
+  }
 
   return (
     <div className="WorkHours">
       {isWorkDay(data.days) && (
         <>
-          <h2>{formatWorkTime(seconds)}</h2>
+          <h2>{hoursProgress(time, start, end)}%</h2>
         </>
       )}
     </div>
   );
 };
+
+const hoursProgress = (current: Date, start: Date, end: Date): number => {
+  if (current < start) return 0;
+  if (current > end) return 100;
+
+  const total = end.getTime() - start.getTime();
+  const progress = current.getTime() - start.getTime();
+
+  return Math.floor((progress / total) * 100);
+};
+
+const buildDateTime = (time: string): Date => {
+  const [hours, minutes] = time.split(":");
+  const dateTime = new Date();
+  dateTime.setHours(Number(hours));
+  dateTime.setMinutes(Number(minutes));
+  dateTime.setSeconds(0);
+  return dateTime;
+};
+
+const isWorkDay = (days: number[]): boolean =>
+  days.includes(new Date().getDay());
 
 export default WorkHours;
