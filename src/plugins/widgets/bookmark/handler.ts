@@ -1,8 +1,5 @@
-import {
-  BookmarkOrderChanges,
-  GetAllBookmarkResponse,
-  GetBookmarkItemsResponse,
-} from "../../../background";
+
+import { GetAllBookmarkResponse, GetBookmarkItemsResponse, BookmarkOrderChanges } from "../../../background/services/bookmarks";
 import { delay } from "./utils";
 
 const bookmarkItemTestData = [

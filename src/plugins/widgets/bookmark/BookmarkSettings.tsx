@@ -2,10 +2,8 @@ import React, { FC, useEffect, useState } from "react";
 
 import { Props, defaultData } from "./types";
 import { getAllBookmarks, getBookmarkItems } from "./handler";
-import {
-  GetAllBookmarkResponse,
-  GetBookmarkItemsResponse,
-} from "../../../background";
+import { GetAllBookmarkResponse } from "../../../background/services/bookmarks";
+
 
 const BookmarkSettings: FC<Props> = ({ data = defaultData, setData }) => {
   const [bookmarks, setBookmarks] = useState<GetAllBookmarkResponse[]>([]);

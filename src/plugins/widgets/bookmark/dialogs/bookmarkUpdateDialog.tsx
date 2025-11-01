@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import Modal from "react-modal";
 import "./model.sass";
-import { GetBookmarkItemsResponse } from "../../../../background";
+import { GetBookmarkItemsResponse } from "../../../../background/services/bookmarks";
+
 
 // export interface BookmarkModalEditResponse {
 //   name?: string;

@@ -103,7 +103,7 @@ if (!isWeb) {
     }),
   );
 
-  config.entry.background = "./src/background.ts";
+  config.entry.background = "./src/background/index.ts";
 }
 
 if (isWeb && isProduction) {

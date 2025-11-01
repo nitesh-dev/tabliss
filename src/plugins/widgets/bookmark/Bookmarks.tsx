@@ -12,12 +12,12 @@ import {
   removeBookmarks,
   updateBookmarkItem,
 } from "./handler";
-import { GetBookmarkItemsResponse } from "../../../background";
 import { getFaviconIcon } from "./utils";
 import { ReactSortable } from "react-sortablejs";
 import { EditIcon, GlobeIcon, RemoveIcon } from "../../../views/shared";
 import BookmarkUpdateDialog from "./dialogs/bookmarkUpdateDialog";
 import FaviconIcon from "./favicon";
+import { GetBookmarkItemsResponse } from "../../../background/services/bookmarks";
 
 const Bookmarks: FC<Props> = ({ data = defaultData }) => {
   const [originalOrder, setOriginalOrder] = useState<
